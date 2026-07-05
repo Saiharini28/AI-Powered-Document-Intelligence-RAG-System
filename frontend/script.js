@@ -80,6 +80,22 @@ async function sendMessage() {
     }
 
     questionInput.value = "";
+    
+    const loadingDiv =
+        document.createElement("div");
+    loadingDiv.className =
+        "message bot";
+
+    loadingDiv.id = "loading";
+
+    loadingDiv.innerHTML =
+        "🤖 Thinking...";
+
+    chatBox.appendChild(
+        loadingDiv
+    );
+    chatBox.scrollTop =
+        chatBox.scrollHeight;
 
     try {
 
@@ -99,6 +115,9 @@ async function sendMessage() {
 
         const data =
             await response.json();
+            document
+            .getElementById("loading")
+            ?.remove();
 
         chatBox.innerHTML += `
             <div class="message bot">
@@ -128,7 +147,10 @@ async function sendMessage() {
             chatBox.scrollHeight;
 
     } catch (error) {
-
+        document
+        .getElementById("loading")
+        ?.remove();
+        
         console.error(error);
 
         chatBox.innerHTML += `
@@ -228,24 +250,84 @@ function renderChats() {
         const div =
             document.createElement("div");
 
-        div.className = "doc-item";
+        div.className =
+        currentChat === chat.id
+        ? "doc-item active-chat"
+        : "doc-item";
 
-        div.innerText = chat.title;
+        const title =
+            document.createElement("span");
 
-        div.onclick = () => {
+        title.innerText =
+            chat.title;
+
+        title.onclick = () => {
 
             currentChat = chat.id;
 
+            renderChats();
+
             document.getElementById(
                 "chatBox"
-            ).innerHTML = chat.messages;
+            ).innerHTML =
+                chat.messages;
         };
+
+        const deleteBtn =
+            document.createElement("span");
+
+        deleteBtn.innerText = " x";
+
+        deleteBtn.style.cursor =
+            "pointer";
+
+        deleteBtn.onclick = (e) => {
+
+            e.stopPropagation();
+
+            deleteChat(chat.id);
+        };
+
+        div.appendChild(title);
+
+        div.appendChild(deleteBtn);
 
         history.appendChild(div);
     });
 }
 
 renderChats();
+
+function deleteChat(id) {
+    if (
+        !confirm(
+            "Do you want to remove this chat?"
+        )
+    ) {
+        return;
+    }
+
+    chats = chats.filter(
+        chat => chat.id !== id
+    );
+
+    saveChats();
+
+    renderChats();
+
+    if (currentChat === id) {
+
+        currentChat = null;
+
+        document.getElementById(
+            "chatBox"
+        ).innerHTML = `
+            <div class="welcome">
+                Chat Deleted
+            </div>
+        `;
+    }
+}
 
 if (chats.length > 0) {
 
@@ -256,3 +338,34 @@ if (chats.length > 0) {
     ).innerHTML =
         chats[0].messages;
 }
+
+function clearAllChats() {
+    if (
+        !confirm(
+            "This will remove all saved chats. Continue?"
+        )
+    ) {
+        return;
+    }
+
+    chats = [];
+
+    currentChat = null;
+
+    saveChats();
+
+    renderChats();
+
+    document.getElementById(
+        "chatBox"
+    ).innerHTML = `
+        <div class="welcome">
+            All Chats Cleared
+        </div>
+    `;
+}
+
+window.uploadPDF = uploadPDF;
+window.sendMessage = sendMessage;
+window.newChat = newChat;
+window.clearAllChats = clearAllChats;

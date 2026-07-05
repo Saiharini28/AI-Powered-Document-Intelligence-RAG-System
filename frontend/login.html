@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Login</h2>
+
+<input id="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+
+<button onclick="login()">
+Login
+</button>
+
+<script type="module" src="auth.js"></script>
+
+<script>
+async function login(){
+
+    const email =
+        document.getElementById("email").value;
+
+    const password =
+        document.getElementById("password").value;
+
+    try{
+
+        await window.signInWithEmailAndPassword(
+            window.auth,
+            email,
+            password
+        );
+
+        alert("Login Successful");
+
+    }catch(error){
+
+        alert(error.message);
+    }
+}
+</script>
+
+<script type="module">
+
+import {
+    onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+
+import { app }
+from "./firebase.js";
+
+import {
+    getAuth
+}
+from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+
+const auth =
+    getAuth(app);
+
+onAuthStateChanged(
+    auth,
+    (user) => {
+
+        if(user){
+
+            window.location.href =
+                "index.html";
+        }
+    }
+);
+
+</script>
+
+</body>
+</html>

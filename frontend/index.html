@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div>
+    <span id="userEmail"></span>
+
+    <button onclick="logout()">
+        Logout
+    </button>
+</div>
+
 
 <div class="app">
 
@@ -16,6 +24,10 @@
 
         <button class="new-chat-btn" onclick="newChat()">
             + New Chat
+        </button>
+
+        <button onclick="clearAllChats()">
+            Clear All Chats
         </button>
         
         <div id="chatHistory"></div>
@@ -61,6 +73,9 @@
 </div>
 
 <script src="script.js"></script>
+<script type="module" src="auth.js"></script>
+
+<script type="module" src="protect.js"></script>
 
 </body>
 </html>

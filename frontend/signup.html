@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Signup</h2>
+
+<input id="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+
+<button onclick="signup()">
+Signup
+</button>
+
+<script type="module" src="auth.js"></script>
+
+<script>
+async function signup(){
+
+    const email =
+        document.getElementById("email").value;
+
+    const password =
+        document.getElementById("password").value;
+
+    try{
+
+        await window.createUserWithEmailAndPassword(
+            window.auth,
+            email,
+            password
+        );
+
+        alert("Signup Successful");
+
+    }catch(error){
+
+        alert(error.message);
+    }
+}
+</script>
+
+</body>
+</html>
