@@ -1,8 +1,8 @@
-# Ask My Docs AI
+# AI-Powered Document Intelligence & RAG System
 
 ## Overview
 
-Ask My Docs AI is an AI-powered document intelligence platform that enables users to upload PDF documents and interact with them using natural language queries. The application uses Retrieval-Augmented Generation (RAG) to retrieve relevant information from uploaded documents and generate accurate responses with source citations.
+AI-Powered Document Intelligence & RAG System is an AI-powered document intelligence platform that enables users to upload PDF documents and interact with them using natural language queries. The application uses Retrieval-Augmented Generation (RAG) to retrieve relevant information from uploaded documents and generate accurate responses with source citations.
 
 ## Features
 
